@@ -23,21 +23,12 @@ app.get('/api/hello', function(req, res) {
   res.json({ greeting: 'hello API' });
 });
 
-app.get('/api/timestamp/:date_string?', (req, res) => {
-  const { date_string } = req.params;
-  let date;
-
-  if (!date_string) {
-    date = new Date();
-  } else {
-    const date_int = parseInt(date_string);
-
-    date = new Date(
-      date_int.toString() === date_string ? date_int : date_string
-    );
-  }
-
-  res.json({ unix: date.getTime(), utc: date.toUTCString() });
+app.get('/api/whoami', (req, res) => {
+  res.json({
+    ipaddress: req.ip,
+    language: req.headers['accept-language'],
+    software: req.get('User-Agent')
+  });
 });
 
 // listen for requests :)
